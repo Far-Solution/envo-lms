@@ -107,11 +107,10 @@ export function DashboardLayout({ children, user, profile }: DashboardLayoutProp
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-              }`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${isActive
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                }`}
               onClick={() => mobile && setSidebarOpen(false)}
             >
               <item.icon className="h-4 w-4" />
@@ -142,13 +141,15 @@ export function DashboardLayout({ children, user, profile }: DashboardLayoutProp
         {/* Header */}
         <header className="flex h-16 items-center justify-between border-b bg-card px-6">
           <div className="flex items-center gap-4">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-            </Sheet>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+
             <div className="hidden lg:block">
               <h2 className="text-lg font-semibold capitalize">{profile.role} Portal</h2>
             </div>
@@ -161,32 +162,38 @@ export function DashboardLayout({ children, user, profile }: DashboardLayoutProp
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <button type="button" className="rounded-full focus:outline-none">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={profile.profile_picture_url || "/placeholder.svg"} />
+                    <AvatarImage src={profile?.profile_picture_url || ""} />
                     <AvatarFallback>
-                      {profile.first_name[0]}
-                      {profile.last_name[0]}
+                      {profile?.first_name?.[0]?.toUpperCase() || ""}
+                      {profile?.last_name?.[0]?.toUpperCase() || ""}
                     </AvatarFallback>
                   </Avatar>
-                </Button>
+                </button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {profile.first_name} {profile.last_name}
+                      {profile?.first_name} {profile?.last_name}
                     </p>
-                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user?.email}
+                    </p>
                   </div>
                 </DropdownMenuLabel>
+
                 <DropdownMenuSeparator />
+
                 <DropdownMenuItem asChild>
                   <Link href={`/dashboard/${profile.role}/profile`}>
                     <Settings className="mr-2 h-4 w-4" />
                     Profile Settings
                   </Link>
                 </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
@@ -194,6 +201,7 @@ export function DashboardLayout({ children, user, profile }: DashboardLayoutProp
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
           </div>
         </header>
 

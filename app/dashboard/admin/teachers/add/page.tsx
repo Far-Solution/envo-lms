@@ -22,7 +22,7 @@ export default function AddTeacherPage() {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
-  const [courseId, setCourseId] = useState("")
+  const [courseId, setCourseId] = useState("") // we must add a check to institute id later
   const [loadingCourses, setLoadingCourses] = useState(true)
   const [courses, setCourses] = useState<Course[]>([])
 
