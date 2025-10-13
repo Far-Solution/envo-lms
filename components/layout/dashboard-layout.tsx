@@ -102,7 +102,7 @@ export function DashboardLayout({ children, user, profile }: DashboardLayoutProp
       </div>
       <nav className="flex-1 space-y-1 px-4 py-4">
         {navigationItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
+          const isActive = pathname === item.href
           return (
             <Link
               key={item.name}
